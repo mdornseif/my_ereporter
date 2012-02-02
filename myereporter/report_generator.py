@@ -181,7 +181,10 @@ class ReportGenerator(webapp.RequestHandler):
 
       if self.delete:
         db.delete(exceptions)
-
+    else:
+      if self.debug:
+        self.response.out.write("no data\n")
+        
 
 application = webapp.WSGIApplication([('.*', ReportGenerator)])
 
