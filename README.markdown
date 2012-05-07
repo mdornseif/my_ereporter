@@ -1,10 +1,11 @@
 This is an attempt to improve
 http://code.google.com/p/googleappengine/source/browse/trunk/python/google/appengine/ext/ereporter/
+See https://github.com/mdornseif/my_ereporter for further Information.
 
 To use:
 
     mkdir -P lib
-    git submodule add git@github.com:mdornseif/my_ereporter.git lib/my_ereporter.git
+    git submodule add git@github.com:mdornseif/my_ereporter.git lib/my_ereporter
     echo "import os.path" > lib/__init__.py
     echo "import site" >> lib/__init__.py
     echo "site.addsitedir(os.path.dirname(__file__))" >> lib/__init__.py
