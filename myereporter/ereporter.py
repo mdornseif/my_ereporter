@@ -247,6 +247,14 @@ class ExceptionRecordingHandler(logging.Handler):
     major_ver, minor_ver = version.rsplit('.', 1)
     minor_ver = int(minor_ver)
     key_name = ExceptionRecord.get_key_name(signature, version)
+    # The stacktrace might contain unescaped bytestreams from jinja2 templates.
+    # we try to decode them as UTF8
+    stacktrace = self.__GetFormatter().formatException(exc_info)
+    try:
+        stacktrace = stacktrace.decode('utf-8')
+    except:
+        # decoding failed
+        stacktrace = repr(stacktrace)
 
     exrecord = ExceptionRecord.get_by_key_name(key_name)
     if not exrecord:
@@ -256,7 +264,7 @@ class ExceptionRecordingHandler(logging.Handler):
           major_version=major_ver,
           minor_version=minor_ver,
           date=today,
-          stacktrace=self.__GetFormatter().formatException(exc_info),
+          stacktrace=stacktrace,
           http_method=os.environ['REQUEST_METHOD'],
           url=self.__GetURL(),
           handler=self.__RelativePath(os.environ['PATH_TRANSLATED']))
