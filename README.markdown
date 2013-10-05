@@ -31,3 +31,7 @@ Then in your `main.py`:
     # Problem: eReporter does not support exceptions in transactions
     # http://code.google.com/p/googleappengine/issues/detail?id=5220
     myereporter.register_logger()
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mdornseif/my_ereporter/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
