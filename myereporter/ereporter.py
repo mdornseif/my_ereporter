@@ -211,6 +211,7 @@ class ExceptionRecordingHandler(logging.Handler):
     else:
       return logging._defaultFormatter
 
+  @db.transactional(retries=1)
   def emit(self, record):
     """Log an error to the datastore, if applicable.
 
@@ -229,9 +230,7 @@ class ExceptionRecordingHandler(logging.Handler):
       if not memcache.add(signature, None, self.log_interval):
         return
 
-
-      db.run_in_transaction_custom_retries(1, self.__EmitTx, signature,
-                                           record.exc_info)
+      self.__EmitTx(signature, record.exc_info)
     except Exception:
       self.handleError(record)
 
